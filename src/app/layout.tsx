@@ -4,7 +4,7 @@ import { AppShell } from "@/components/AppShell";
 import { ToastProvider } from "@/components/states/Toast";
 
 export const metadata: Metadata = {
-  title: "Bolt Ops UI Kit",
+  title: "Bolt-Ops-UI-Kit",
   description: "Production-grade operations dashboard UI patterns",
 };
 

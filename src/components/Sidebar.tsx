@@ -98,7 +98,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
 
         <div className="border-t border-[var(--ux-border)] p-4">
           <div className="rounded-md bg-[var(--ux-surface-2)] p-3">
-            <p className="text-xs font-medium text-[var(--ux-text)]">Bolt Ops UI Kit</p>
+            <p className="text-xs font-medium text-[var(--ux-text)]">Bolt-Ops-UI-Kit</p>
             <p className="mt-0.5 text-xs text-[var(--ux-text-muted)]">Production-grade patterns</p>
           </div>
         </div>

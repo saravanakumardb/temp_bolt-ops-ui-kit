@@ -48,7 +48,7 @@ export default function Home() {
             <Zap className="h-5 w-5 text-[var(--ux-accent-foreground)]" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-[var(--ux-text)]">Bolt Ops UI Kit</h1>
+            <h1 className="text-2xl font-bold text-[var(--ux-text)]">Bolt-Ops-UI-Kit</h1>
             <p className="text-sm text-[var(--ux-text-muted)]">Production-grade operations dashboard patterns</p>
           </div>
         </div>
