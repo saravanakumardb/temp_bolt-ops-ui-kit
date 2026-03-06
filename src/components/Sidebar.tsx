@@ -33,7 +33,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
     <>
       {open && (
         <div
-          className="fixed inset-0 z-20 bg-[var(--ux-text)]/20 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-20 bg-[var(--ux-text)]/20 backdrop-blur-sm lg:hidden transition-opacity"
           onClick={onClose}
           aria-hidden="true"
         />
@@ -41,21 +41,23 @@ export function Sidebar({ open, onClose }: SidebarProps) {
 
       <aside
         className={cn(
-          "fixed left-0 top-0 z-30 flex h-full w-64 flex-col border-r border-[var(--ux-border)] bg-[var(--ux-surface)] transition-transform duration-300",
+          "fixed left-0 top-0 z-30 flex h-full w-64 flex-col border-r border-[var(--ux-border)] bg-[var(--ux-surface)] transition-transform duration-300 ease-in-out",
           "lg:static lg:translate-x-0",
           open ? "translate-x-0" : "-translate-x-full"
         )}
       >
         <div className="flex h-14 items-center justify-between border-b border-[var(--ux-border)] px-4">
-          <div className="flex items-center gap-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-[var(--ux-accent)]">
-              <Zap className="h-4 w-4 text-[var(--ux-accent-foreground)]" />
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--ux-accent)] shadow-[0_2px_8px_var(--ux-accent)/0.3]">
+              <Zap className="h-3.5 w-3.5 text-[var(--ux-accent-foreground)]" />
             </div>
-            <span className="text-sm font-semibold text-[var(--ux-text)]">Ops UI Kit</span>
+            <div>
+              <span className="text-sm font-semibold text-[var(--ux-text)] leading-none">Ops UI Kit</span>
+            </div>
           </div>
           <button
             onClick={onClose}
-            className="rounded p-1 hover:bg-[var(--ux-surface-2)] text-[var(--ux-text-muted)] lg:hidden focus-visible:ring-2 focus-visible:ring-[var(--ux-ring)] focus-visible:outline-none"
+            className="rounded-md p-1.5 hover:bg-[var(--ux-surface-2)] text-[var(--ux-text-muted)] hover:text-[var(--ux-text)] lg:hidden focus-visible:ring-2 focus-visible:ring-[var(--ux-ring)] focus-visible:outline-none transition-colors"
             aria-label="Close sidebar"
           >
             <X className="h-4 w-4" />
@@ -63,7 +65,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
         </div>
 
         <nav className="flex-1 overflow-y-auto p-3 scrollbar-thin">
-          <p className="mb-2 px-2 text-xs font-medium uppercase tracking-wider text-[var(--ux-text-muted)]">
+          <p className="mb-2 px-2 text-xs font-semibold uppercase tracking-widest text-[var(--ux-text-muted)]/60">
             Components
           </p>
           <ul className="space-y-0.5">
@@ -76,18 +78,19 @@ export function Sidebar({ open, onClose }: SidebarProps) {
                     href={item.href}
                     onClick={onClose}
                     className={cn(
-                      "flex items-center gap-3 rounded-md px-2 py-2 text-sm transition-colors focus-visible:ring-2 focus-visible:ring-[var(--ux-ring)] focus-visible:outline-none",
+                      "group flex items-center gap-3 rounded-lg px-2.5 py-2 text-sm transition-all duration-150 focus-visible:ring-2 focus-visible:ring-[var(--ux-ring)] focus-visible:outline-none",
                       isActive
                         ? "bg-[var(--ux-accent)]/10 text-[var(--ux-accent)] font-medium"
                         : "text-[var(--ux-text-muted)] hover:bg-[var(--ux-surface-2)] hover:text-[var(--ux-text)]"
                     )}
                   >
-                    <Icon className="h-4 w-4 shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <div>{item.label}</div>
-                    </div>
+                    <Icon className={cn(
+                      "h-4 w-4 shrink-0 transition-colors",
+                      isActive ? "text-[var(--ux-accent)]" : "text-[var(--ux-text-muted)] group-hover:text-[var(--ux-text)]"
+                    )} />
+                    <span className="flex-1 min-w-0 truncate">{item.label}</span>
                     {isActive && (
-                      <div className="h-1.5 w-1.5 rounded-full bg-[var(--ux-accent)]" />
+                      <div className="h-4 w-0.5 rounded-full bg-[var(--ux-accent)]" />
                     )}
                   </Link>
                 </li>
@@ -96,9 +99,9 @@ export function Sidebar({ open, onClose }: SidebarProps) {
           </ul>
         </nav>
 
-        <div className="border-t border-[var(--ux-border)] p-4">
-          <div className="rounded-md bg-[var(--ux-surface-2)] p-3">
-            <p className="text-xs font-medium text-[var(--ux-text)]">Bolt-Ops-UI-Kit</p>
+        <div className="border-t border-[var(--ux-border)] p-3">
+          <div className="rounded-lg bg-[var(--ux-surface-2)] border border-[var(--ux-border)] px-3 py-2.5">
+            <p className="text-xs font-semibold text-[var(--ux-text)]">Bolt-Ops-UI-Kit</p>
             <p className="mt-0.5 text-xs text-[var(--ux-text-muted)]">Production-grade patterns</p>
           </div>
         </div>

@@ -11,21 +11,42 @@ function computeKpis() {
   const resolved = incidents.filter((i) => i.status === "resolved" || i.status === "closed").length;
   const critical = incidents.filter((i) => i.severity === "critical").length;
   const investigating = incidents.filter((i) => i.status === "investigating").length;
-
   const resolutionRate = Math.round((resolved / total) * 100);
-
   return { total, open, resolved, critical, investigating, resolutionRate };
 }
+
+const severityConfig = [
+  { key: "critical", label: "Critical", color: "var(--ux-danger)" },
+  { key: "high", label: "High", color: "var(--ux-warning)" },
+  { key: "medium", label: "Medium", color: "var(--ux-accent)" },
+  { key: "low", label: "Low", color: "var(--ux-success)" },
+] as const;
 
 export default function KpiPage() {
   const kpis = computeKpis();
 
+  const severityCounts = severityConfig.map((s) => ({
+    ...s,
+    count: incidents.filter((i) => i.severity === s.key).length,
+  }));
+
+  const topServices = Object.entries(
+    incidents.reduce<Record<string, number>>((acc, i) => {
+      acc[i.service] = (acc[i.service] ?? 0) + 1;
+      return acc;
+    }, {})
+  )
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, 5);
+
+  const maxServiceCount = topServices[0]?.[1] ?? 1;
+
   return (
-    <div className="max-w-5xl px-6 py-8">
+    <div className="max-w-5xl px-6 py-8 animate-fade-in">
       <div className="mb-6">
         <h1 className="text-xl font-bold text-[var(--ux-text)]">KPI Cards</h1>
         <p className="mt-1 text-sm text-[var(--ux-text-muted)]">
-          Metric cards with trend indicators and chart placeholders. Data derived from the 100-row incident mock.
+          Metric cards with trend indicators and chart placeholders — derived from the 100-incident mock dataset.
         </p>
       </div>
 
@@ -77,43 +98,87 @@ export default function KpiPage() {
         />
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-6">
-        <ChartPlaceholder type="line" title="Incidents over time" height="h-48" />
-        <ChartPlaceholder type="bar" title="By severity" height="h-48" />
-        <ChartPlaceholder type="pie" title="Status distribution" height="h-48" />
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mb-4">
+        <ChartPlaceholder
+          type="line"
+          title="Incidents over time"
+          subtitle="Last 12 periods"
+          height="h-48"
+        />
+        <ChartPlaceholder
+          type="bar"
+          title="By severity"
+          subtitle="Relative volume"
+          height="h-48"
+        />
+        <ChartPlaceholder
+          type="pie"
+          title="Status distribution"
+          subtitle="Current snapshot"
+          height="h-48"
+        />
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <ChartPlaceholder type="area" title="Resolution rate trend" height="h-56" />
-        <div className="rounded-xl border border-[var(--ux-border)] bg-[var(--ux-surface)] p-5">
-          <h3 className="text-sm font-semibold text-[var(--ux-text)] mb-4">Top services by incidents</h3>
-          <div className="flex flex-col gap-3">
-            {Object.entries(
-              incidents.reduce<Record<string, number>>((acc, i) => {
-                acc[i.service] = (acc[i.service] ?? 0) + 1;
-                return acc;
-              }, {})
-            )
-              .sort(([, a], [, b]) => b - a)
-              .slice(0, 5)
-              .map(([service, count]) => {
-                const pct = Math.round((count / incidents.length) * 100);
-                return (
-                  <div key={service}>
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-sm text-[var(--ux-text)]">{service}</span>
-                      <span className="text-xs text-[var(--ux-text-muted)]">{count} incidents</span>
+      <div className="grid gap-4 sm:grid-cols-2 mb-4">
+        <ChartPlaceholder
+          type="area"
+          title="Resolution rate trend"
+          subtitle="Rolling 12-period view"
+          height="h-56"
+        />
+
+        <div className="rounded-xl border border-[var(--ux-border)] bg-[var(--ux-surface)] shadow-[0_1px_4px_var(--ux-shadow)] overflow-hidden transition-shadow hover:shadow-[0_4px_16px_var(--ux-shadow)]">
+          <div className="border-b border-[var(--ux-border)] px-5 py-3">
+            <h3 className="text-sm font-semibold text-[var(--ux-text)]">Top services by incidents</h3>
+            <p className="mt-0.5 text-xs text-[var(--ux-text-muted)]">Ranked by total incident count</p>
+          </div>
+          <div className="flex flex-col gap-3 p-5">
+            {topServices.map(([service, count], i) => {
+              const pct = Math.round((count / incidents.length) * 100);
+              const barPct = Math.round((count / maxServiceCount) * 100);
+              return (
+                <div key={service}>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span className="text-xs font-mono text-[var(--ux-text-muted)] w-4 shrink-0">{i + 1}</span>
+                      <span className="text-sm text-[var(--ux-text)] truncate">{service}</span>
                     </div>
-                    <div className="h-1.5 rounded-full bg-[var(--ux-surface-2)] overflow-hidden">
-                      <div
-                        className="h-full rounded-full bg-[var(--ux-accent)]"
-                        style={{ width: `${pct}%` }}
-                      />
+                    <div className="flex items-center gap-2 shrink-0 ml-2">
+                      <span className="text-xs text-[var(--ux-text-muted)]">{count}</span>
+                      <span className="text-xs font-medium text-[var(--ux-text-muted)] w-8 text-right">{pct}%</span>
                     </div>
                   </div>
-                );
-              })}
+                  <div className="h-1.5 rounded-full bg-[var(--ux-surface-2)] overflow-hidden">
+                    <div
+                      className="h-full rounded-full bg-[var(--ux-accent)] transition-all duration-500"
+                      style={{ width: `${barPct}%` }}
+                    />
+                  </div>
+                </div>
+              );
+            })}
           </div>
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-[var(--ux-border)] bg-[var(--ux-surface)] shadow-[0_1px_4px_var(--ux-shadow)] overflow-hidden">
+        <div className="border-b border-[var(--ux-border)] px-5 py-3">
+          <h3 className="text-sm font-semibold text-[var(--ux-text)]">Severity breakdown</h3>
+          <p className="mt-0.5 text-xs text-[var(--ux-text-muted)]">Distribution across all 100 incidents</p>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-[var(--ux-border)]">
+          {severityCounts.map((s) => (
+            <div key={s.key} className="px-5 py-4">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="h-2.5 w-2.5 rounded-full" style={{ background: s.color }} />
+                <span className="text-xs font-medium text-[var(--ux-text-muted)] capitalize">{s.label}</span>
+              </div>
+              <p className="text-2xl font-bold tabular-nums text-[var(--ux-text)]">{s.count}</p>
+              <p className="text-xs text-[var(--ux-text-muted)] mt-0.5">
+                {Math.round((s.count / incidents.length) * 100)}% of total
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </div>
