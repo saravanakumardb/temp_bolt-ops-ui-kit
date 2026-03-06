@@ -1,121 +1,99 @@
-# Bolt App 1 — Ops UI Kit (Micro-App)
+# Bolt — Ops UI Kit
 
-Before you start: read and follow `DESIGN_SYSTEM_BRIEF.md`.
+**GitHub repo:** `saravanakumardb/temp_bolt-ops-ui-kit`
+
+## Push Instructions
+
+- Push directly to `main` — do NOT open a PR
+- Only modify files in this repo
+
+## Rules
+
+- No `console.log`
+- No network calls — mock data / localStorage only
+- No hardcoded colors — no hex, no rgb/rgba/hsl, no `bg-[#123456]` Tailwind classes
+- Do NOT commit `.env*`, `.next/`, `node_modules/`, `.vercel/`
+- pnpm only
+- `pnpm run check` must pass (`tsc --noEmit` + `eslint`)
+- `pnpm run build` must pass (`next build --webpack`)
+
+## CSS Token Contract
+
+Define in `src/app/globals.css` under `:root` (add `.dark` override):
+
+- `--ux-bg` — page background
+- `--ux-surface` — card/panel surface
+- `--ux-surface-2` — elevated surface
+- `--ux-border` — borders
+- `--ux-text` — primary text
+- `--ux-text-muted` — secondary text
+- `--ux-accent` — primary accent
+- `--ux-accent-foreground` — text on accent
+- `--ux-danger` — destructive/error
+- `--ux-warning` — warning
+- `--ux-success` — success
+- `--ux-ring` — focus ring
+- `--ux-shadow` — shadows
+
+Use only via Tailwind: `bg-[var(--ux-surface)]`, `text-[var(--ux-text)]`, `border-[var(--ux-border)]`
+
+## Component Architecture
+
+- Reusable components → `src/components/`
+- Pages in `src/app/**` compose components only
+- Components must NOT import from `src/app/**`
+
+## Stack
+
+- Next.js 16 App Router, React 19, TypeScript strict
+- TailwindCSS v4, pnpm
 
 ## Mission
 
-Build a **UI/UX-rich** Next.js 16 micro-app called **Ops UI Kit** that showcases production-grade operations dashboard patterns. This app will later be cross-pollinated into `dashboards/admin-web` and `dashboards/tracker-web`.
+Build a **UI/UX-rich** Next.js 16 micro-app showcasing production-grade operations dashboard patterns for reuse in `dashboards/admin-web` and `dashboards/tracker-web`.
 
-## Scope / Safety
+Additional stack: shadcn/ui-style components (Radix + Tailwind), lucide-react, data mocks in `src/data/`
 
-- Only change files in this repository.
-- **No backend / no network calls.** Use mock data and localStorage.
-- **No auth, no Cosmos, no Key Vault.**
-- **No `console.log`.**
-- **No hardcoded colors.** Define a small set of CSS variables in `src/app/globals.css` (e.g. `--ux-*`) and only use those + Tailwind utilities.
-- **Do not edit** any other repo folder.
+## Pages
 
-## Stack requirements
+- `/` overview landing + links
+- `/table` DataTable demo
+- `/filters` filter builder demo
+- `/details` drawers/modals demo
+- `/states` loading/empty/error/success patterns
+- `/kpi` KPI cards + chart placeholders
 
-- Next.js `16.1.x` (App Router)
-- React `19.x`
-- TypeScript strict
-- TailwindCSS v4
-- shadcn/ui-style components (Radix + Tailwind)
-- lucide-react icons
-- pnpm package manager
+## App Shell
 
-## App pages (required)
+- Left sidebar (responsive), top bar: global search, theme toggle, help button
+- `Cmd+K` opens command palette, `Esc` closes modal/drawer
 
-- `/` — overview landing + links to demos
-- `/table` — DataTable demo
-- `/filters` — filter builder demo
-- `/details` — drawers/modals demo
-- `/states` — loading/empty/error/success patterns
-- `/kpi` — KPI cards + tiny chart placeholders
+## DataTable
 
-## App shell UX (required)
+Mock ~80–120 rows (incidents/webhook deliveries): `id`, `status`, `severity`, `service`, `createdAt`, `requestId`, `summary`, `tags`
 
-- Left sidebar navigation (responsive)
-- Top bar with:
-  - global search input (client-side; filters mock data)
-  - theme toggle (light/dark)
-  - help button showing shortcuts
-- Keyboard shortcuts:
-  - `Cmd+K` opens command palette
-  - `Esc` closes modal/drawer
+- Sorting, pagination, column visibility toggle
+- Row selection + bulk actions bar
+- Per-row menu: copy requestId, copy JSON, open drawer
+- Sticky header, expandable row details
 
-## Demo requirements (high polish)
+## Filter Builder
 
-### 1) DataTable
+- Faceted filters (status, severity, service), date range, free-text search
+- Active filter chips + clear all
+- Save/load presets (localStorage)
 
-Mock dataset (~80–120 rows) representing “incidents” or “webhook deliveries” with:
+## Details Drawer
 
-- `id`, `status`, `severity`, `service`, `createdAt`, `requestId`, `summary`, `tags`
+Right-side drawer on row click with tabs: Overview (key/value), Raw JSON, Notes (editable, localStorage)
+Focus: moves inside on open, returns to triggering row on close
 
-Table must include:
+## States Gallery
 
-- sorting
-- pagination
-- column visibility toggle
-- row selection + bulk actions bar
-- per-row actions menu:
-  - copy `requestId`
-  - copy row JSON
-  - open details drawer
-- sticky header
-- expandable row details
-
-### 2) Filter Builder
-
-A filter panel supporting:
-
-- faceted filters (status, severity, service)
-- date range (simple UI)
-- free-text search
-- active filter chips row
-- clear all
-- save/load presets (localStorage)
-
-### 3) Details Drawer
-
-Row click opens right-side drawer with tabs:
-
-- Overview (key/value)
-- Raw JSON (pretty-printed)
-- Notes (editable, stored locally)
-
-Focus rules:
-
-- opening drawer moves focus inside
-- closing returns focus to triggering row
-
-### 4) States Gallery
-
-Reusable patterns for:
-
-- skeleton loading
-- empty state with CTA
-- inline error banner with retry
-- toast notifications
-- destructive confirm dialog
-
-## Deliverables
-
-Create a complete app with:
-
-- `package.json` scripts: `dev`, `check`, `build`, `lint`, `test`
-- `check` must run `tsc --noEmit` + `eslint`
-- `build` must run `next build --webpack`
+Skeleton loading, empty state + CTA, inline error banner + retry, toast notifications, destructive confirm dialog
 
 ## Verification
 
-From the repo root:
-
-- `pnpm install`
-- `pnpm run check`
-- `pnpm run build`
-
-## Output expectation
-
-Open a PR containing only this app. No other repo changes.
+```
+pnpm install && pnpm run check && pnpm run build
+```
