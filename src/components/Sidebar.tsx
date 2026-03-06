@@ -2,16 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  LayoutDashboard,
-  Table2,
-  Filter,
-  PanelRight,
-  Layers,
-  BarChart3,
-  X,
-  Zap,
-} from "lucide-react";
+import { LayoutDashboard, Table2, Filter, PanelRight, Layers, ChartBar as BarChart3, X, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface NavItem {

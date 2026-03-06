@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, createContext, useContext, useCallback } from "react";
-import { CheckCircle, AlertTriangle, Info, XCircle, X } from "lucide-react";
+import { CircleCheck as CheckCircle, TriangleAlert as AlertTriangle, Info, Circle as XCircle, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export type ToastVariant = "success" | "error" | "warning" | "info";

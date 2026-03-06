@@ -1,6 +1,6 @@
 "use client";
 
-import { BarChart3, LineChart, PieChart, AreaChart } from "lucide-react";
+import { ChartBar as BarChart3, ChartLine as LineChart, ChartPie as PieChart, ChartArea as AreaChart } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type ChartType = "bar" | "line" | "pie" | "area";

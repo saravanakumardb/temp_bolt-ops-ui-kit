@@ -3,14 +3,7 @@
 import { KpiCard } from "@/components/KpiCard";
 import { ChartPlaceholder } from "@/components/ChartPlaceholder";
 import { incidents } from "@/data/incidents";
-import {
-  AlertCircle,
-  CheckCircle,
-  Activity,
-  Clock,
-  TrendingUp,
-  Zap,
-} from "lucide-react";
+import { CircleAlert as AlertCircle, CircleCheck as CheckCircle, Activity, Clock, TrendingUp, Zap } from "lucide-react";
 
 function computeKpis() {
   const total = incidents.length;

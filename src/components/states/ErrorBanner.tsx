@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertTriangle, X, RefreshCw } from "lucide-react";
+import { TriangleAlert as AlertTriangle, X, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { useState } from "react";
 

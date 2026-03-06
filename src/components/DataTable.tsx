@@ -1,20 +1,7 @@
 "use client";
 
 import { useState, useMemo, useCallback, useRef } from "react";
-import {
-  ChevronUp,
-  ChevronDown,
-  ChevronsUpDown,
-  ChevronLeft,
-  ChevronRight,
-  Copy,
-  MoreHorizontal,
-  Eye,
-  Code2,
-  Trash2,
-  Settings2,
-  ChevronDownIcon,
-} from "lucide-react";
+import { ChevronUp, ChevronDown, ChevronsUpDown, ChevronLeft, ChevronRight, Copy, MoveHorizontal as MoreHorizontal, Eye, Code as Code2, Trash2, Settings2, ChevronDown as ChevronDownIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { StatusBadge, SeverityBadge } from "@/components/StatusBadge";

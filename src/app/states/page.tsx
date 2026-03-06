@@ -7,14 +7,7 @@ import { ErrorBanner } from "@/components/states/ErrorBanner";
 import { ConfirmDialog } from "@/components/states/ConfirmDialog";
 import { useToast } from "@/components/states/Toast";
 import { Button } from "@/components/ui/Button";
-import {
-  CheckCircle,
-  AlertTriangle,
-  Info,
-  XCircle,
-  Trash2,
-  RefreshCw,
-} from "lucide-react";
+import { CircleCheck as CheckCircle, TriangleAlert as AlertTriangle, Info, Circle as XCircle, Trash2, RefreshCw } from "lucide-react";
 
 function Section({ title, description, children }: { title: string; description?: string; children: React.ReactNode }) {
   return (

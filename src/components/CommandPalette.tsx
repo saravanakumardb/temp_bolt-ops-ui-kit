@@ -2,16 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import {
-  LayoutDashboard,
-  Table2,
-  Filter,
-  PanelRight,
-  Layers,
-  BarChart3,
-  Search,
-  X,
-} from "lucide-react";
+import { LayoutDashboard, Table2, Filter, PanelRight, Layers, ChartBar as BarChart3, Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface CommandItem {

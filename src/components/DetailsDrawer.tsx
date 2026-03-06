@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { X, FileText, Code2, StickyNote } from "lucide-react";
+import { X, FileText, Code as Code2, StickyNote } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { StatusBadge, SeverityBadge } from "@/components/StatusBadge";
 import { cn } from "@/lib/utils";

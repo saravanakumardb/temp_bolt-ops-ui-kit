@@ -1,14 +1,5 @@
 import Link from "next/link";
-import {
-  Table2,
-  Filter,
-  PanelRight,
-  Layers,
-  BarChart3,
-  ArrowRight,
-  Zap,
-  Command,
-} from "lucide-react";
+import { Table2, Filter, PanelRight, Layers, ChartBar as BarChart3, ArrowRight, Zap, Command } from "lucide-react";
 
 const pages = [
   {

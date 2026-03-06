@@ -1,6 +1,6 @@
 "use client";
 
-import { Inbox, Search, Filter, AlertCircle } from "lucide-react";
+import { Inbox, Search, Filter, CircleAlert as AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
 interface EmptyStateProps {

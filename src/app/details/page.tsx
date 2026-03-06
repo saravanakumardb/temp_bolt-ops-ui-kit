@@ -6,7 +6,7 @@ import { DetailsDrawer } from "@/components/DetailsDrawer";
 import { Badge } from "@/components/ui/Badge";
 import { incidents } from "@/data/incidents";
 import type { Incident } from "@/data/incidents";
-import { PanelRight, AlertCircle, CheckCircle, Clock } from "lucide-react";
+import { PanelRight, CircleAlert as AlertCircle, CircleCheck as CheckCircle, Clock } from "lucide-react";
 import { format } from "date-fns";
 
 export default function DetailsPage() {

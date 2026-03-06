@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu, Search, Sun, Moon, HelpCircle, Command } from "lucide-react";
+import { Menu, Search, Sun, Moon, CircleHelp as HelpCircle, Command } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { useEffect, useState } from "react";
 
